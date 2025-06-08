@@ -35,29 +35,7 @@ from medpy.metric import hd95
 from util.roi import process_and_augment_roi
 import pywt
 
-def wavelet_enhance_rgb_for_unet(img_rgb):
-    # Step 1: 转换为 YCrCb
-    img_ycc = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2YCrCb)
-    y, cr, cb = cv2.split(img_ycc)
 
-    # Step 2: 对亮度 Y 通道做小波增强
-    coeffs = pywt.dwt2(y, 'haar')  # 或 'db2' / 'sym4'
-    cA, (cH, cV, cD) = coeffs
-
-    # Step 3: 增强高频部分
-    cH *= 1.5
-    cV *= 1.5
-    cD *= 1.5
-
-    # Step 4: 重构增强后的 Y 通道
-    enhanced_y = pywt.idwt2((cA, (cH, cV, cD)), 'haar')
-    enhanced_y = np.clip(enhanced_y, 0, 255).astype(np.uint8)
-
-    # Step 5: 合并并转换回 RGB
-    enhanced_img_ycc = cv2.merge((enhanced_y, cr, cb))
-    enhanced_rgb = cv2.cvtColor(enhanced_img_ycc, cv2.COLOR_YCrCb2RGB)
-
-    return enhanced_rgb
 
 class CustomDataset(Dataset):
     def __init__(self, model,image_list, path, img_size=224, crop=None, is_train=None):
