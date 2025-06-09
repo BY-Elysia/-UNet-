@@ -75,9 +75,8 @@ loss = η * segmentation_loss + (1-η) * classification_loss
 其中：
 - `segmentation_loss`: Dice损失和BCE损失的组合
 - `classification_loss`: 带有Focal Loss的交叉熵损失
-- `η`: 多任务权重参数，默认设置为0.8
-- `γ`: Focal Loss参数，设置为2
-- `w`: 权重参数，设置为0.6
+- `η`: 多任务权重参数，设置为0.4
+
 
 ## 数据预处理与增强
 
