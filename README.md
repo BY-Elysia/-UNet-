@@ -149,4 +149,9 @@ loss = η * segmentation_loss + (1-η) * classification_loss
 6. **医学图像特化数据增强**: 包含伽马变换、几何变换、质量增强等针对医学图像的专用增强策略
 7. **ROI引导的两阶段处理**: 先提取病灶区域位置，再进行精细化的多任务学习
 
+## 训练
+
+1. **第一阶段**：打开two stage下的main.py，将main中的训练集和验证集路径改为本地路径，并运行main.py，模型会保存在checkpoint下的Zhou文件夹下。
+2. **第二阶段**：打开ROi下的main.py，加载阶段一训练好的分割模型，同样将main中的训练集和验证集路径改为本地路径，并运行main.py，模型会保存在checkpoint下的Zhou文件夹下。
+3. **推理阶段**：
 
