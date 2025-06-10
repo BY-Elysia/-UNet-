@@ -149,15 +149,4 @@ loss = η * segmentation_loss + (1-η) * classification_loss
 6. **医学图像特化数据增强**: 包含伽马变换、几何变换、质量增强等针对医学图像的专用增强策略
 7. **ROI引导的两阶段处理**: 先提取病灶区域位置，再进行精细化的多任务学习
 
-## 引用
 
-如果本项目对您的研究有帮助，请考虑引用：
-
-```bibtex
-@article{multitask_unet_2024,
-  title={多任务学习在医学图像分析中的应用},
-  author={Your Name},
-  journal={Medical Image Analysis},
-  year={2024}
-}
-```
