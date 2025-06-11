@@ -154,9 +154,9 @@ loss = η * segmentation_loss + (1-η) * classification_loss
 1. **第一阶段**：打开two stage下的main.py，将main中的训练集和验证集路径改为本地路径，并运行main.py，模型会保存在checkpoint下的Zhou文件夹下。
 2. **第二阶段**：打开ROI下的main.py，加载阶段一训练好的分割模型，同样将main中的训练集和验证集路径改为本地路径，并运行main.py，模型会保存在checkpoint下的Zhou文件夹下。
 3. **推理阶段**：将final_predict中的测试集路径改为本地路径，model_se加载预训练好的分割模型，model加载预训练好的多任务模型，运行final_predict.py，最终结果保存在test_results文件夹下。
-4. 训练集、验证集、测试集的保存格式：
+4. 训练集、测试集的保存格式：
 
-训练集450张，测试集300张
+   训练集450张，测试集300张
 ```plaintext
 ├── train/
 │   ├── 0001/
