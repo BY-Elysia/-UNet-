@@ -45,7 +45,7 @@ def inference_all(model, test_loader, device, save_dir="test_results"):
                     for x in range(w):
                         if mask[y, x] == 1:
                             rgb_image.putpixel((x, y), red)
-
+                rgb_image = rgb_image.resize((5184, 3456))
                 rgb_image.save(os.path.join(seg_dir, f"{name}.png"))
 
                 # 添加到结果记录
