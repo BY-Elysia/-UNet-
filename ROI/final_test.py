@@ -12,7 +12,7 @@ from torch.utils.data import DataLoader
 import os
 from PIL import Image
 from torch.utils.data import Dataset
-def inference_all(model, test_loader, device, save_dir="test_results"):
+def inference_all(model,model1, test_loader, device, save_dir="test_results"):
     model.eval()
     seg_dir = os.path.join(save_dir, "Segmentation_Results")
     os.makedirs(seg_dir, exist_ok=True)
@@ -25,6 +25,7 @@ def inference_all(model, test_loader, device, save_dir="test_results"):
             imgs = data['image'].float().to(device)
             filenames=data['filename']
             se_out, cl_out = model(imgs)
+            se_out=model1(imgs)
 
             # 分割处理
             se_out = torch.sigmoid(se_out)
@@ -93,7 +94,7 @@ class TestImageDataset(Dataset):
         # 如果有指定变换，则应用变换
         image= self.correct_dims(image)
         image= self.augm.transform(image)
-        _,image = process_and_augment_roi(self.model, image, device, self.augm)
+        # _,image = process_and_augment_roi(self.model, image, device, self.augm)
         # 返回图片和文件名的字典
         return {'image': image, 'filename': img_name}
 
@@ -107,13 +108,12 @@ test_dataset = TestImageDataset(model_se,image_dir='../BUSI/test_img/test_img')
 test_loader = DataLoader(test_dataset, batch_size=16, shuffle=False, num_workers=0)
 # 加载模型
 model = UNetTaskAligWeight(n_channels=3,n_classes=1).to(device)
-#checkpoint = torch.load("checkpoint/Zhou/best_model_epoch107.pt", map_location=device)
 checkpoint = torch.load("../model/best_model_epoch153.pt", map_location=device)
 model.load_state_dict(checkpoint['net'])
 model.to(device)
 
 if __name__ == '__main__':
-    inference_all(model, test_loader, device, save_dir="test_results")
+    inference_all(model,model_se, test_loader, device, save_dir="test_results")
 
 
 
