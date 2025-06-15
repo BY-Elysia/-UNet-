@@ -12,7 +12,7 @@ from torch.utils.data import DataLoader
 import os
 from PIL import Image
 from torch.utils.data import Dataset
-def inference_all(model,model1, test_loader, device, save_dir="test_results"):
+def inference_all(model,test_loader, device, save_dir="test_results"):
     model.eval()
     seg_dir = os.path.join(save_dir, "Segmentation_Results")
     os.makedirs(seg_dir, exist_ok=True)
@@ -25,7 +25,6 @@ def inference_all(model,model1, test_loader, device, save_dir="test_results"):
             imgs = data['image'].float().to(device)
             filenames=data['filename']
             se_out, cl_out = model(imgs)
-            se_out=model1(imgs)
 
             # 分割处理
             se_out = torch.sigmoid(se_out)
@@ -113,7 +112,7 @@ model.load_state_dict(checkpoint['net'])
 model.to(device)
 
 if __name__ == '__main__':
-    inference_all(model,model_se, test_loader, device, save_dir="test_results")
+    inference_all(model, test_loader, device, save_dir="test_results")
 
 
 
